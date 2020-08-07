@@ -19,7 +19,8 @@ func Must(key string) string {
 
 func MustInt(key string) int {
 	value := Must(key)
-	d, err := strconv.Atoi(value)
+	trimmed := strings.TrimSpace(value)
+	i, err := strconv.Atoi(trimmed)
 	if err != nil {
 		log.Fatalf("Fatal: Environment variable %s must be a number: %s", key, err)
 	}
