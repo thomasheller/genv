@@ -25,5 +25,25 @@ func MustInt(key string) int {
 		log.Fatalf("Fatal: Environment variable %s must be a number: %s", key, err)
 	}
 
-	return d
+	return i
+}
+
+func MustInts(key string) []int {
+	s := Must(key)
+
+	parts := strings.Split(s, ",")
+
+	var ints []int
+
+	for _, part := range parts {
+		trimmed := strings.TrimSpace(part)
+		i, err := strconv.Atoi(trimmed)
+		if err != nil {
+			log.Fatalf("Fatal: Environment variable %s must be comma-separated list a numbers: %s", key, err)
+		}
+
+		ints = append(ints, i)
+	}
+
+	return ints
 }
